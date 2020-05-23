@@ -1,23 +1,24 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
+  <q-page class="q-pa-xs relative-position">
+    <!-- <example-component
       title="Example component"
       active
       :todos="todos"
       :meta="meta"
-    ></example-component>
+    ></example-component> -->
+    <calculation-component />
   </q-page>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
-import ExampleComponent from 'components/CompositionComponent.vue'
+import CalculationComponent from 'components/Calculations.vue'
 import { Todo, Meta } from 'components/models'
 
 export default Vue.extend({
   name: 'PageIndex',
-  components: { ExampleComponent },
+  components: { CalculationComponent },
   data () {
     const todos: Todo[] = [
       {
