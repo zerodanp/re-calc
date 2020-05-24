@@ -1,3 +1,6 @@
+import Vue from 'vue'
+import { uid, Notify, LocalStorage } from 'quasar'
+
 // speichert daten objekte, arrays, etc...
 const state = {
   calcs: {
@@ -5,31 +8,42 @@ const state = {
       titel: 'Some Real Estate Object',
       kaufpreis: 120000,
       mietflaeche: 30,
-      kaltmiete_y: 5400
-    },
-    'ID1': {
-      titel: 'Some Real Estate Object',
-      kaufpreis: 140000,
-      mietflaeche: 120,
-      kaltmiete_y: 16500
-    },
-    'ID2': {
-      titel: 'Some Real Estate Object',
-      kaufpreis: 250000,
-      mietflaeche: 260,
-      kaltmiete_y: 42500
+      kaltmiete_y: 5400,
+      kaltmiete_qm: 15
     }
   }
 }
 
 // nicht aysnchron
 const mutations = {
-
+  addCalculation(state, payload) {
+		Vue.set(state.calcs, payload.id, payload.calculation)
+  },
+  updateCalculation(state, payload) {
+    Object.assign(state.calcs[payload.id], payload.updates)
+  },
+  deleteCalculation(state, id) {
+    Vue.delete(state.calcs, id)
+  }
 }
 
 // asynchron -> Serverabfragen
 const actions = {
-
+  addCalculation({ commit }, calculation) {
+	  let calcId = uid()
+	  let payload = {
+	  	id: calcId,
+	  	calculation: calculation
+    }
+  //dispatch('fsAddMachine',payload)
+	commit('addCalculation', payload)
+  },
+  updateCalculation({ commit }, payload) {
+    commit('updateCalculation', payload)
+  },
+  deleteCalculation({ commit }, calcID){
+    commit('deleteCalculation', calcID)
+  }
 }
 
 const getters = {
