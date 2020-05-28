@@ -50,7 +50,6 @@ export default {
     return {
       showEditCalculation: false,
       displayCalc: {
-
       }
     }
   },
@@ -76,7 +75,7 @@ export default {
     } 
   },
   computed: {
-    ...mapGetters('storeParam', ['getParams']),
+    //...mapGetters('storeParam', ['getParams']),
   },
   filters: {
     separatedNumber (value) {

@@ -3,6 +3,13 @@ import { uid, Notify, LocalStorage } from 'quasar'
 
 // speichert daten objekte, arrays, etc...
 const state = {
+  params: {
+    Const_KNK: 0.13,
+    Const_ANUM: 0.25,
+    Const_EK: 0.25,
+    Const_AZ: 0.02,
+    Const_AAT: 0.01
+  },
   calcs: {
     'ID0': {
       titel: 'Some Real Estate Object',
@@ -11,7 +18,7 @@ const state = {
       kaltmiete_y: 5400,
       kaltmiete_qm: 15,
       params: {
-        Const_KNK: 0.13,
+        Const_KNK: 0.02,
         Const_ANUM: 0.25,
         Const_EK: 0.25,
         Const_AZ: 0.02,
@@ -40,7 +47,8 @@ const mutations = {
 // asynchron -> Serverabfragen
 const actions = {
   addCalculation({ commit, dispatch }, calculation) {
-	  let calcId = uid()
+    let calcId = uid()
+    Object.assign(calculation, {params: state.params})
 	  let payload = {
 	  	id: calcId,
 	  	calculation: calculation
@@ -82,6 +90,9 @@ const actions = {
 const getters = {
   getCalculations: (state) => {
     return state.calcs
+  },
+  getParams: (state) => {
+    return state.params
   }
 }
 

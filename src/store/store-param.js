@@ -1,7 +1,7 @@
 // import { LocalStorage } from 'quasar'
 
 // speichert daten objekte, arrays, etc...
-const state = {
+export const state = {
   params: {
     Const_KNK: 0.13,
     Const_ANUM: 0.25,

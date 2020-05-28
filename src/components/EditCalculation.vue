@@ -107,6 +107,13 @@ export default {
         mietflaeche: 0,
         kaltmiete_y: 0,
         kaltmiete_qm: 0,
+        params: {
+          Const_KNK: 0,
+          Const_ANUM: 0,
+          Const_EK: 0,
+          Const_AZ: 0,
+          Const_AAT: 0
+        }
       },
       model: 'yearly',
       disable: false

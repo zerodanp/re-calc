@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -104,13 +104,11 @@ export default {
         kaufpreis: 0,
         mietflaeche: null,
         kaltmiete_y: 0,
-        kaltmiete_qm: 0,
+        kaltmiete_qm: 0
       },
       model: 'yearly',
       disable: false
     }
-  },
-  computed: {
   },
   methods: {
     ...mapActions('storeCalculation', ['addCalculation']),
@@ -139,7 +137,7 @@ export default {
         kaufpreis: 0,
         mietflaeche: null,
         kaltmiete_y: 0,
-        kaltmiete_qm: 0,
+        kaltmiete_qm: 0
       }
     },
     submitCalculationToStore() {

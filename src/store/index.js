@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import storeCalculation from './store-calc'
 import storeParam from './store-param'
+
 // import example from './module-example'
 
 Vue.use(Vuex)
@@ -19,8 +20,8 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      storeCalculation,
-      storeParam
+      storeCalculation
+      //storeParam
       // example
     },
 
