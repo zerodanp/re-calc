@@ -5,7 +5,14 @@
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  import { mapActions } from 'vuex'
+  
+  export default {
+    methods: {
+      ...mapActions('storeCalculation',['getCalcs'])
+    },
+    mounted() {
+      this.getCalcs()
+    }
+  }
 </script>

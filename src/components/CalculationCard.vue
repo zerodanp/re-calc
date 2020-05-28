@@ -22,9 +22,9 @@
               <div class="col-6">Mietflaeche: {{calc.mietflaeche}}</div>
               <div class="col-6">Nettokaltmiete: {{calc.kaltmiete_y }}</div>
               <div class="col-6">Euro / qm: {{ calc.kaltmiete_qm }}</div>
-              <div class="col-6">Bruttokaufpreis: {{calc.kaufpreis * (1 + getParams.Const_KNK) }} </div>
-              <div class="col-6">Kaufnebenkosten: {{calc.kaufpreis * getParams.Const_KNK }}</div>
-              <div class="col-12">Nicht umlegbare Kosten: {{calc.kaltmiete_y * getParams.Const_ANUM }}</div>
+              <div class="col-6">Bruttokaufpreis: {{calc.kaufpreis * (1 + calc.params.Const_KNK) }} </div>
+              <div class="col-6">Kaufnebenkosten: {{calc.kaufpreis * calc.params.Const_KNK }}</div>
+              <div class="col-12">Nicht umlegbare Kosten: {{calc.kaltmiete_y * calc.params.Const_ANUM }}</div>
             </div>
           </q-card-section>
         </q-card>

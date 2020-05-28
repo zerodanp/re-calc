@@ -9,40 +9,73 @@ const state = {
       kaufpreis: 120000,
       mietflaeche: 30,
       kaltmiete_y: 5400,
-      kaltmiete_qm: 15
-    }
+      kaltmiete_qm: 15,
+      params: {
+        Const_KNK: 0.13,
+        Const_ANUM: 0.25,
+        Const_EK: 0.25,
+        Const_AZ: 0.02,
+        Const_AAT: 0.01
+      }
+    } 
   }
 }
 
 // nicht aysnchron
 const mutations = {
   addCalculation(state, payload) {
-		Vue.set(state.calcs, payload.id, payload.calculation)
+    Vue.set(state.calcs, payload.id, payload.calculation)
   },
   updateCalculation(state, payload) {
     Object.assign(state.calcs[payload.id], payload.updates)
   },
   deleteCalculation(state, id) {
     Vue.delete(state.calcs, id)
+  },
+  setCalcs(state, tempcalcs) {
+    Object.assign(state.calcs, tempcalcs)
   }
 }
 
 // asynchron -> Serverabfragen
 const actions = {
-  addCalculation({ commit }, calculation) {
+  addCalculation({ commit, dispatch }, calculation) {
 	  let calcId = uid()
 	  let payload = {
 	  	id: calcId,
 	  	calculation: calculation
     }
-  //dispatch('fsAddMachine',payload)
-	commit('addCalculation', payload)
+    //dispatch('fsAddMachine',payload)
+    commit('addCalculation', payload)
+    dispatch('saveCalcs')
   },
-  updateCalculation({ commit }, payload) {
+  updateCalculation({ commit, dispatch }, payload) {
     commit('updateCalculation', payload)
+    dispatch('saveCalcs')
   },
-  deleteCalculation({ commit }, calcID){
+  deleteCalculation({ commit, dispatch }, calcID){
     commit('deleteCalculation', calcID)
+    dispatch('saveCalcs')
+  },
+  saveCalcs({ state }) {
+    try {
+      LocalStorage.set('calculations', state.calcs)
+    }
+    catch (e) {
+      console.log(e)
+    }
+  },
+  getCalcs({ commit }){
+    console.log('getCalcs action')
+    try{
+      let tempcalc = LocalStorage.getItem('calculations')
+      if (tempcalc) {
+        commit('setCalcs', tempcalc)
+      }
+    }
+    catch (e) {
+      console.log(e)
+    }
   }
 }
 
