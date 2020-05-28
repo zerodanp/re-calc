@@ -6,13 +6,14 @@
 
 <script>
   import { mapActions } from 'vuex'
-  
+
   export default {
     methods: {
-      ...mapActions('storeCalculation',['getCalcs'])
+      ...mapActions('storeCalculation',['getCalcs','getParams'])
     },
     mounted() {
       this.getCalcs()
+      this.getParams()
     }
   }
 </script>

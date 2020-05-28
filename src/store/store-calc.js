@@ -3,13 +3,14 @@ import { uid, Notify, LocalStorage } from 'quasar'
 
 // speichert daten objekte, arrays, etc...
 const state = {
-  params: {
+  defaultParams: {
     Const_KNK: 0.13,
     Const_ANUM: 0.25,
     Const_EK: 0.25,
     Const_AZ: 0.02,
     Const_AAT: 0.01
   },
+  params: null,
   calcs: {
     'ID0': {
       titel: 'Some Real Estate Object',
@@ -39,8 +40,11 @@ const mutations = {
   deleteCalculation(state, id) {
     Vue.delete(state.calcs, id)
   },
-  setCalcs(state, tempcalcs) {
-    Object.assign(state.calcs, tempcalcs)
+  setCalcs(state, tempCalcs) {
+    Object.assign(state.calcs, tempCalcs)
+  },
+  setParams(state, tempParams) {
+    Object.assign(state.params, tempParams)
   }
 }
 
@@ -48,7 +52,13 @@ const mutations = {
 const actions = {
   addCalculation({ commit, dispatch }, calculation) {
     let calcId = uid()
-    Object.assign(calculation, {params: state.params})
+    if(state.params){
+      Object.assign(calculation, {params: state.params})
+    }
+    else {
+      Object.assign(calculation, {params: state.defaultParams})
+    }
+
 	  let payload = {
 	  	id: calcId,
 	  	calculation: calculation
@@ -73,12 +83,30 @@ const actions = {
       console.log(e)
     }
   },
-  getCalcs({ commit }){
-    console.log('getCalcs action')
-    try{
-      let tempcalc = LocalStorage.getItem('calculations')
-      if (tempcalc) {
-        commit('setCalcs', tempcalc)
+  saveParams({ state }) {
+    try {
+      LocalStorage.set('parameters', state.params)
+    }
+    catch (e) {
+      console.log(e)
+    }
+  },
+  getCalcs({ commit }) {
+    try {
+      let tempCalcs = LocalStorage.getItem('calculations')
+      if (tempCalcs) {
+        commit('setCalcs', tempCalcs)
+      }
+    }
+    catch (e) {
+      console.log(e)
+    }
+  },
+  getParams({ commit }) {
+    try {
+      let tempParams = LocalStorage.getItem('parameters')
+      if(tempParams){
+        commit('setParams', tempParams)
       }
     }
     catch (e) {
@@ -90,9 +118,6 @@ const actions = {
 const getters = {
   getCalculations: (state) => {
     return state.calcs
-  },
-  getParams: (state) => {
-    return state.params
   }
 }
 

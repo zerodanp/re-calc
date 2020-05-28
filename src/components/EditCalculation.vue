@@ -1,93 +1,119 @@
 <template>
   <q-card>
-      <q-card-section class="row">
-        <div class="text-h6">Edit</div>
-        <q-space />
-        <q-btn
-          flat
-          round
-          v-close-popup
-          icon="close" />
-      </q-card-section>
+    <q-card-section class="row">
+      <div class="text-h6">Edit</div>
+      <q-space />
+      <q-btn
+        flat
+        round
+        v-close-popup
+        icon="close" />
+    </q-card-section>
+    <q-card-section>
+      <q-tabs
+      v-model="tab"
+      animated
+      class="bg-primary text-white rounded-borders"
+      active-color="text-grey"
+      indicator-color="bg-secondary"
+      align="justify"
+      >
+        <q-tab name="calcs" label="Berechnung" />
+        <q-tab name="params" label="Parameter" />
+      </q-tabs>
+    </q-card-section>
     <q-form
       @submit.prevent="onSubmit"
       @reset="onReset">
+
+      <q-tab-panels 
+      v-model="tab"
+      swipeable 
+      animated>
+        <q-tab-panel 
+        name="calcs">
+          <q-card-section>
+            <div class="row">
+              <div class="col-12 col-md q-px-md">
+                <q-input
+                outlined
+                v-model="calcToSubmit.titel"
+                label="Titel"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || 'Bitte einen Titel eingeben']"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md q-px-md">
+                <q-input
+                outlined
+                v-model.number="calcToSubmit.kaufpreis"
+                label="Kaufpreis"
+                lazy-rules
+                :rules="[ val => val >= 0 || 'Bitte Kaufpreis eingeben']"
+                />
+              </div>
+              <div class="col-12 col-md q-px-md">
+                <q-input
+                outlined
+                :value.number="calcToSubmit.mietflaeche"
+                @input="(newVal) => {calcToSubmit.mietflaeche = newVal;calculatePrice() }"
+                label="Mietfläche"
+                lazy-rules
+                :rules="[ val => val >= 0 || 'Please type something']"
+                />     
+              </div>
+            </div> 
+            <div class="row q-pb-md">
+              <div class="col-12 q-px-md">
+                <q-btn-toggle
+                  v-model="model"
+                  toggle-color="primary"
+                  spread
+                  no-caps
+                  :options="[
+                    {label: 'Jahresmiete', value: 'yearly'},
+                    {label: 'Quadratmeter', value: 'qm'}
+                  ]"
+                />
+              </div>
+            </div> 
+            <div class="row">
+              <div class="col-12 col-md q-px-md">
+                <q-input
+                outlined
+                :disable="disable"
+                :value.number="calcToSubmit.kaltmiete_y"
+                @input="(newVal) => {calcToSubmit.kaltmiete_y = newVal;calculatePrice() }"
+                label="Jahreskaltmiete"
+                lazy-rules
+                :rules="[ val => val >= 0 || 'Bitte Jahresmiete eingeben']"
+                />     
+              </div>
+              <div class="col-12 col-md q-px-md">
+                <q-input
+                outlined
+                :disable="!disable"
+                :value.number="calcToSubmit.kaltmiete_qm"
+                @input="(newVal) => {calcToSubmit.kaltmiete_qm = newVal;calculatePrice() }"
+                label="Quadratmetermiete"
+                lazy-rules
+                :rules="[ val => val >= 0 || 'Bitte Quadratmetermiete eingeben']"
+                />     
+              </div>
+            </div>
+          </q-card-section>
+        </q-tab-panel>
+        <q-tab-panel name="params">
+        </q-tab-panel>
+      </q-tab-panels>
       <q-card-section>
-        <div class="row">
-          <div class="col-12 col-md q-px-md">
-            <q-input
-            outlined
-            v-model="calcToSubmit.titel"
-            label="Titel"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Bitte einen Titel eingeben']"
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 col-md q-px-md">
-            <q-input
-            outlined
-            v-model.number="calcToSubmit.kaufpreis"
-            label="Kaufpreis"
-            lazy-rules
-            :rules="[ val => val >= 0 || 'Bitte Kaufpreis eingeben']"
-            />
-          </div>
-          <div class="col-12 col-md q-px-md">
-            <q-input
-            outlined
-            :value.number="calcToSubmit.mietflaeche"
-            @input="(newVal) => {calcToSubmit.mietflaeche = newVal;calculatePrice() }"
-            label="Mietfläche"
-            lazy-rules
-            :rules="[ val => val >= 0 || 'Please type something']"
-            />     
-          </div>
-        </div> 
-        <div class="row q-pb-md">
-          <div class="col-12 q-px-md">
-            <q-btn-toggle
-              v-model="model"
-              toggle-color="primary"
-              spread
-              no-caps
-              :options="[
-                {label: 'Jahresmiete', value: 'yearly'},
-                {label: 'Quadratmeter', value: 'qm'}
-              ]"
-            />
-          </div>
-        </div> 
-        <div class="row">
-          <div class="col-12 col-md q-px-md">
-            <q-input
-            outlined
-            :disable="disable"
-            :value.number="calcToSubmit.kaltmiete_y"
-            @input="(newVal) => {calcToSubmit.kaltmiete_y = newVal;calculatePrice() }"
-            label="Jahreskaltmiete"
-            lazy-rules
-            :rules="[ val => val >= 0 || 'Bitte Jahresmiete eingeben']"
-            />     
-          </div>
-          <div class="col-12 col-md q-px-md">
-            <q-input
-            outlined
-            :disable="!disable"
-            :value.number="calcToSubmit.kaltmiete_qm"
-            @input="(newVal) => {calcToSubmit.kaltmiete_qm = newVal;calculatePrice() }"
-            label="Quadratmetermiete"
-            lazy-rules
-            :rules="[ val => val >= 0 || 'Bitte Quadratmetermiete eingeben']"
-            />     
-          </div>
-        </div>
         <div class="row">
           <q-btn label="Reset" type="reset" color="primary" flat/>
           <q-space></q-space>
           <q-btn label="Save" type="submit" color="primary"/>
-      </div>
+        </div>
       </q-card-section>
     </q-form>
   </q-card>
@@ -116,7 +142,8 @@ export default {
         }
       },
       model: 'yearly',
-      disable: false
+      disable: false,
+      tab: 'calcs'
     }
   },
   computed: {
