@@ -74,7 +74,7 @@ export default {
     .info-border {
         border-top-style: solid;
         border-bottom-style: solid;
-        border-left-style: solid;
+        //border-left-style: solid;
         border-right-style: solid;
         border-bottom-right-radius: 5px;
         border-top-right-radius: 5px;

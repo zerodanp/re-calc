@@ -7,11 +7,13 @@
     >
       <div class="q-pa-md cardholder row items-start q-gutter-md">
         <q-card 
-        @click="showCalculationDetail = true" 
         flat 
         bordered 
-        clickable>
-          <q-card-section>
+        >
+          <q-card-section
+          @click="showCalculationDetail = true"
+          clickable
+          class="cursor-pointer">
             <div class="row">
               <div class="text-h5 q-mt-sm q-mb-xs">{{calc.titel}}</div>
               <q-space></q-space>
@@ -22,28 +24,31 @@
     
           <q-card-section>
             <div class="row">
-              <div class="col-6">
-                <modal-info 
-                :info="calc.kaltmiete_y / calc.kaufpreis"
-                :filter="'percentFormatDE'">Rohrendite</modal-info> 
-              </div>
-              <div class="col-6">
-                <modal-info
-                :info="(calc.kaltmiete_y - (calc.kaltmiete_y * calc.params.Const_ANUM)) / (calc.kaufpreis * (1 + calc.params.Const_KNK))"
-                :filter="'percentFormatDE'">ROI</modal-info>
-              </div>
               <div class="col-12">
                 <modal-info
                 :info="calc.kaufpreis / calc.kaltmiete_y"
                 :filter="'numberFormatDE'">Kaufpreisfaktor</modal-info>
               </div>
-
-              <div class="col-6">Rohrendite: {{calc.kaltmiete_y / calc.kaufpreis | percentFormatDE}}</div>
-              <div class="col-6">Nettokaltmiete: {{calc.kaltmiete_y | toCurrency }}</div>
-              <div class="col-6">Euro / qm: {{ calc.kaltmiete_qm | toCurrency}}</div>
-              <div class="col-6">Bruttokaufpreis: {{(calc.kaufpreis * (1 + calc.params.Const_KNK)) | toCurrency }} </div>
-              <div class="col-6">Kaufnebenkosten: {{calc.kaufpreis * calc.params.Const_KNK | toCurrency }}</div>
-              <div class="col-12">Nicht umlegbare Kosten: {{calc.kaltmiete_y * calc.params.Const_ANUM | toCurrency }}</div>
+              <div class="col-12 col-md-6">
+                <modal-info 
+                :info="calc.kaltmiete_y / calc.kaufpreis"
+                :filter="'percentFormatDE'">Rohrendite</modal-info> 
+              </div>
+              <div class="col-12 col-md-6">
+                <modal-info
+                :info="(calc.kaltmiete_y - (calc.kaltmiete_y * calc.params.Const_ANUM)) / (calc.kaufpreis * (1 + calc.params.Const_KNK))"
+                :filter="'percentFormatDE'">ROI</modal-info>
+              </div>
+              <div class="col-12 col-md-6">
+                <modal-info 
+                :info="computedLiquidYear / (calc.params.Const_EK*calc.kaufpreis)"
+                :filter="'percentFormatDE'">liq. EK-Rendite</modal-info> 
+              </div>
+              <div class="col-12 col-md-6">
+                <modal-info
+                :info="computedLiquidYear"
+                :filter="'toCurrency'">liq. Jahresüberschuss</modal-info>
+              </div>
             </div>
           </q-card-section>
         </q-card>
@@ -77,6 +82,7 @@ export default {
     return {
       showEditCalculation: false,
       showCalculationDetail: false,
+      //liquid_year: this.$props.calc.kaltmiete_y - (this.$props.calc.kaltmiete_y * this.$props.calc.params.Const_ANUM) - (this.$props.calc.kaufpreis * this.$props.calc.params.Const_AZ) - (this.$props.calc.kaufpreis * this.$props.calc.params.Const_AAT),
       displayCalc: {
       }
     }
@@ -103,7 +109,13 @@ export default {
     } 
   },
   computed: {
-    //...mapGetters('storeParam', ['getParams']),
+   computedLiquidYear: function () {
+      // `this` points to the vm instance
+      return this.$props.calc.kaltmiete_y 
+        - (this.$props.calc.kaltmiete_y * this.$props.calc.params.Const_ANUM) 
+        - (((this.$props.calc.kaufpreis * (1 + this.$props.calc.params.Const_KNK)) - (this.$props.calc.kaufpreis * this.$props.calc.params.Const_EK )) * this.$props.calc.params.Const_AZ) 
+        - (((this.$props.calc.kaufpreis * (1 + this.$props.calc.params.Const_KNK)) - (this.$props.calc.kaufpreis * this.$props.calc.params.Const_EK )) * this.$props.calc.params.Const_AAT)
+    }
   },
   filters: {
     separatedNumber (value) {
