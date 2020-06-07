@@ -6,7 +6,11 @@
       leave-active-class="animated zoomOut absolute-top"
     >
       <div class="q-pa-md cardholder row items-start q-gutter-md">
-        <q-card class="card" flat bordered>
+        <q-card 
+        @click="showCalculationDetail = true" 
+        flat 
+        bordered 
+        clickable>
           <q-card-section>
             <div class="row">
               <div class="text-h5 q-mt-sm q-mb-xs">{{calc.titel}}</div>
@@ -18,13 +22,28 @@
     
           <q-card-section>
             <div class="row">
-              <div class="col-6">Kaufpreis: {{calc.kaufpreis }}</div>
-              <div class="col-6">Mietflaeche: {{calc.mietflaeche}}</div>
-              <div class="col-6">Nettokaltmiete: {{calc.kaltmiete_y }}</div>
-              <div class="col-6">Euro / qm: {{ calc.kaltmiete_qm }}</div>
-              <div class="col-6">Bruttokaufpreis: {{calc.kaufpreis * (1 + calc.params.Const_KNK) }} </div>
-              <div class="col-6">Kaufnebenkosten: {{calc.kaufpreis * calc.params.Const_KNK }}</div>
-              <div class="col-12">Nicht umlegbare Kosten: {{calc.kaltmiete_y * calc.params.Const_ANUM }}</div>
+              <div class="col-6">
+                <modal-info 
+                :info="calc.kaltmiete_y / calc.kaufpreis"
+                :filter="'percentFormatDE'">Rohrendite</modal-info> 
+              </div>
+              <div class="col-6">
+                <modal-info
+                :info="(calc.kaltmiete_y - (calc.kaltmiete_y * calc.params.Const_ANUM)) / (calc.kaufpreis * (1 + calc.params.Const_KNK))"
+                :filter="'percentFormatDE'">ROI</modal-info>
+              </div>
+              <div class="col-12">
+                <modal-info
+                :info="calc.kaufpreis / calc.kaltmiete_y"
+                :filter="'numberFormatDE'">Kaufpreisfaktor</modal-info>
+              </div>
+
+              <div class="col-6">Rohrendite: {{calc.kaltmiete_y / calc.kaufpreis | percentFormatDE}}</div>
+              <div class="col-6">Nettokaltmiete: {{calc.kaltmiete_y | toCurrency }}</div>
+              <div class="col-6">Euro / qm: {{ calc.kaltmiete_qm | toCurrency}}</div>
+              <div class="col-6">Bruttokaufpreis: {{(calc.kaufpreis * (1 + calc.params.Const_KNK)) | toCurrency }} </div>
+              <div class="col-6">Kaufnebenkosten: {{calc.kaufpreis * calc.params.Const_KNK | toCurrency }}</div>
+              <div class="col-12">Nicht umlegbare Kosten: {{calc.kaltmiete_y * calc.params.Const_ANUM | toCurrency }}</div>
             </div>
           </q-card-section>
         </q-card>
@@ -38,6 +57,14 @@
       :id="id"
       :calc="calc"/>
     </q-dialog>
+    <q-dialog
+    v-model="showCalculationDetail">
+      <detail-calculation
+      @close="showCalculationDetail = false"
+      :id="id"
+      :calc="calc">
+      </detail-calculation>
+    </q-dialog>
   </div>
 </template>
 
@@ -49,6 +76,7 @@ export default {
   data () {
     return {
       showEditCalculation: false,
+      showCalculationDetail: false,
       displayCalc: {
       }
     }
@@ -81,12 +109,44 @@ export default {
     separatedNumber (value) {
       return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     },
-    fixedDcimal (value) {
+    fixedDecimal (value) {
       return value.toFixed(2)
+    },
+    roundDecimal(value) {
+        let temp = value * 100
+        temp = Math.round(temp)
+        return (temp/100)
+    },
+    numberFormatDE(num) {
+      return (
+        num
+          .toFixed(2) // always two decimal digits
+          .replace('.', ',') // replace decimal point character with ,
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+      ) // use . as a separator
+    },
+    percentFormatDE(num) {
+      num = num*100
+      return (
+        num
+          .toFixed(2) // always two decimal digits
+          .replace('.', ',') // replace decimal point character with ,
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' %'
+      ) // use . as a separator
+    },
+    toCurrency(num) {
+      return (
+        num
+          .toFixed(2) // always two decimal digits
+          .replace('.', ',') // replace decimal point character with ,
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' €'
+      ) // use . as a separator
     }
   },
   components: {
-    'edit-calculation' : require('components/EditCalculation.vue').default
+    'edit-calculation' : require('components/EditCalculation.vue').default,
+    'modal-info' : require('components/ModalInfo.vue').default,
+    'detail-calculation' : require('components/CalculationDetail.vue').default
   }
 }
 </script>

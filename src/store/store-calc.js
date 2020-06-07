@@ -12,7 +12,7 @@ const state = {
   },
   params: null,
   calcs: {
-    'ID0': {
+    /* 'ID0': {
       titel: 'Some Real Estate Object',
       kaufpreis: 120000,
       mietflaeche: 30,
@@ -25,7 +25,7 @@ const state = {
         Const_AZ: 0.02,
         Const_AAT: 0.01
       }
-    } 
+    }  */
   }
 }
 
