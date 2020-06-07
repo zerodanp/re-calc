@@ -41,12 +41,12 @@
             </div>
             <div class="col-12 col-md-6">
               <modal-info
-              :info="(calc.kaltmiete_y - (calc.kaltmiete_y * calc.params.Const_ANUM)) / (calc.kaufpreis * (1 + calc.params.Const_KNK))"
+              :info="(calc.kaltmiete_y - (calc.kaltmiete_y * (calc.params.Const_ANUM/100))) / (calc.kaufpreis * (1 + (calc.params.Const_KNK/100)))"
               :filter="'percentFormatDE'">ROI</modal-info>
             </div>
             <div class="col-12 col-md-12">
               <modal-info 
-              :info="computedLiquidYear / (calc.params.Const_EK*calc.kaufpreis)"
+              :info="computedLiquidYear / ((calc.params.Const_EK/100)*calc.kaufpreis)"
               :filter="'percentFormatDE'">liq. EK-Rendite</modal-info> 
             </div>
             <div class="col-12 col-md-12">
@@ -83,17 +83,17 @@
             </div>
             <div class="col-12 col-md-6">
               <modal-info 
-              :info="calc.kaufpreis * calc.params.Const_KNK"
+              :info="calc.kaufpreis * (calc.params.Const_KNK/100)"
               :filter="'toCurrency'">KNK</modal-info> 
             </div>
             <div class="col-12 col-md-6">
               <modal-info
-              :info="calc.kaufpreis * (1 + calc.params.Const_KNK)"
+              :info="calc.kaufpreis * (1 + (calc.params.Const_KNK/100))"
               :filter="'toCurrency'">Bruttokaufpreis</modal-info>
             </div>
             <div class="col-12 col-md-6">
               <modal-info 
-              :info="(calc.kaufpreis * (1 + calc.params.Const_KNK)) * calc.params.Const_EK"
+              :info="(calc.kaufpreis * (1 + (calc.params.Const_KNK/100))) * (calc.params.Const_EK/100)"
               :filter="'toCurrency'">Eigenkapital</modal-info> 
             </div>
           </div>
@@ -127,17 +127,17 @@
               </div>
               <div class="col-12 col-md-6">
                 <modal-info 
-                :info="calc.kaltmiete_y * calc.params.Const_ANUM"
+                :info="calc.kaltmiete_y * (calc.params.Const_ANUM/100)"
                 :filter="'toCurrency'">NU Kosten</modal-info> 
               </div>
               <div class="col-12 col-md-6">
                 <modal-info
-                :info="(((this.$props.calc.kaufpreis * (1 + this.$props.calc.params.Const_KNK)) - (this.$props.calc.kaufpreis * this.$props.calc.params.Const_EK )) * this.$props.calc.params.Const_AZ)"
+                :info="(((this.$props.calc.kaufpreis * (1 + (this.$props.calc.params.Const_KNK/100))) - (this.$props.calc.kaufpreis * (this.$props.calc.params.Const_EK/100))) * (this.$props.calc.params.Const_AZ/100))"
                 :filter="'toCurrency'">Zinsen</modal-info>
               </div>
               <div class="col-12 col-md-6">
                 <modal-info 
-                :info="(((this.$props.calc.kaufpreis * (1 + this.$props.calc.params.Const_KNK)) - (this.$props.calc.kaufpreis * this.$props.calc.params.Const_EK )) * this.$props.calc.params.Const_AAT)"
+                :info="(((this.$props.calc.kaufpreis * (1 + (this.$props.calc.params.Const_KNK/100))) - (this.$props.calc.kaufpreis * (this.$props.calc.params.Const_EK/100))) * (this.$props.calc.params.Const_AAT/100))"
                 :filter="'toCurrency'">Tilgung</modal-info> 
               </div>
             </div>
@@ -161,12 +161,12 @@ export default {
     },
     computed: {
       computedLiquidYear: function () {
-        // `this` points to the vm instance
-        return this.$props.calc.kaltmiete_y 
-          - (this.$props.calc.kaltmiete_y * this.$props.calc.params.Const_ANUM) 
-          - (((this.$props.calc.kaufpreis * (1 + this.$props.calc.params.Const_KNK)) - (this.$props.calc.kaufpreis * this.$props.calc.params.Const_EK )) * this.$props.calc.params.Const_AZ) 
-          - (((this.$props.calc.kaufpreis * (1 + this.$props.calc.params.Const_KNK)) - (this.$props.calc.kaufpreis * this.$props.calc.params.Const_EK )) * this.$props.calc.params.Const_AAT)
-      }
+      // `this` points to the vm instance
+      return this.$props.calc.kaltmiete_y 
+        - (this.$props.calc.kaltmiete_y * (this.$props.calc.params.Const_ANUM/100)) 
+        - (((this.$props.calc.kaufpreis * (1 + (this.$props.calc.params.Const_KNK/100))) - (this.$props.calc.kaufpreis * (this.$props.calc.params.Const_EK/100))) * (this.$props.calc.params.Const_AZ/100)) 
+        - (((this.$props.calc.kaufpreis * (1 + (this.$props.calc.params.Const_KNK/100))) - (this.$props.calc.kaufpreis * (this.$props.calc.params.Const_EK/100))) * (this.$props.calc.params.Const_AAT/100))
+    }
     },
 
     components: {

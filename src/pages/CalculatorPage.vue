@@ -14,6 +14,7 @@
         class="relative-position text-center q-mb-lg">
           <q-btn
           @click="showAddCalculation = !showAddCalculation"
+          :disable="getCount"
           color="primary"
           icon="add"
           label="Calculation" />
@@ -38,7 +39,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('storeCalculation', ['getCalculations'])
+    ...mapGetters('storeCalculation', ['getCalculations','getCount'])
   },
   components: {
     'calculation-card': require('components/CalculationCard.vue').default,

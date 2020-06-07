@@ -20,7 +20,7 @@
             v-model="calcToSubmit.titel"
             label="Titel"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Bitte einen Titel eingeben']"
+            :rules="[ val => val && val.length > 0 && val.length <= 25 || 'Bitte einen Titel mit max. 25 Zeichen eingeben']"
             />
           </div>
         </div>

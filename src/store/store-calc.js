@@ -4,11 +4,11 @@ import { uid, Notify, LocalStorage } from 'quasar'
 // speichert daten objekte, arrays, etc...
 const state = {
   defaultParams: {
-    Const_KNK: 0.13,
-    Const_ANUM: 0.25,
-    Const_EK: 0.25,
-    Const_AZ: 0.02,
-    Const_AAT: 0.01
+    Const_KNK: 13,
+    Const_ANUM: 25,
+    Const_EK: 25,
+    Const_AZ: 2,
+    Const_AAT: 1
   },
   params: null,
   calcs: {
@@ -118,6 +118,10 @@ const actions = {
 const getters = {
   getCalculations: (state) => {
     return state.calcs
+  },
+  getCount: (state) => {
+    console.log('getCount:' + Object.keys(state.calcs).length)
+    return (Object.keys(state.calcs).length  >= 5 )
   }
 }
 
