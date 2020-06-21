@@ -1,10 +1,22 @@
 <template>
-  <p>Settings</p>
+  <q-page class="row">
+    <div class="col q-ma-md">
+      <p>Settings</p>
+    </div>
+  </q-page>
 </template>
 
 <script>
-export default {
+import { mapGetters, mapActions } from 'vuex'
 
+export default {
+  data () {
+    return {
+    }
+  },
+  computed: {
+    ...mapGetters('storeCalculation', ['getParams'])
+  },
 }
 </script>
 
