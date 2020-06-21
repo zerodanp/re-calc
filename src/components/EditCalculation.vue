@@ -93,7 +93,7 @@
                 outlined
                 :disable="disable"
                 :value.number="calcToSubmit.kaltmiete_y"
-                @input="(newVal) => {calcToSubmit.kaltmiete_y = newVal;calculatePrice() }"
+                @input="(newVal) => {calcToSubmit.kaltmiete_y = Number(newVal);calculatePrice() }"
                 label="Jahreskaltmiete"
                 lazy-rules
                 :rules="[ val => val >= 0 || 'Bitte Jahresmiete eingeben']"
@@ -104,7 +104,7 @@
                 outlined
                 :disable="!disable"
                 :value.number="calcToSubmit.kaltmiete_qm"
-                @input="(newVal) => {calcToSubmit.kaltmiete_qm = newVal;calculatePrice() }"
+                @input="(newVal) => {calcToSubmit.kaltmiete_qm = Number(newVal);calculatePrice() }"
                 label="Quadratmetermiete"
                 lazy-rules
                 :rules="[ val => val >= 0 || 'Bitte Quadratmetermiete eingeben']"

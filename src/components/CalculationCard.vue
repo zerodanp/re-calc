@@ -41,12 +41,12 @@
               </div>
               <div class="col-12 col-md-6">
                 <modal-info 
-                :info="computedLiquidYear / ((calc.params.Const_EK/100)*calc.kaufpreis)"
+                :info="displayCalc.liquidYear / ((calc.params.Const_EK/100)*calc.kaufpreis)"
                 :filter="'percentFormatDE'">liq. EK-Rendite</modal-info> 
               </div>
               <div class="col-12 col-md-6">
                 <modal-info
-                :info="computedLiquidYear"
+                :info="displayCalc.liquidYear"
                 :filter="'toCurrency'">liq. Jahresüberschuss</modal-info>
               </div>
             </div>
@@ -84,6 +84,7 @@ export default {
       showCalculationDetail: false,
       //liquid_year: this.$props.calc.kaltmiete_y - (this.$props.calc.kaltmiete_y * this.$props.calc.params.Const_ANUM) - (this.$props.calc.kaufpreis * this.$props.calc.params.Const_AZ) - (this.$props.calc.kaufpreis * this.$props.calc.params.Const_AAT),
       displayCalc: {
+        liquidYear: 0
       }
     }
   },
@@ -106,16 +107,16 @@ export default {
         console.log(this.$props.id)
         this.deleteCalculation(this.$props.id)
       })
-    } 
-  },
-  computed: {
-   computedLiquidYear: function () {
+    },
+    computeLiquidYear(){
       // `this` points to the vm instance
-      return this.$props.calc.kaltmiete_y 
+      this.displayCalc.liquidYear = this.$props.calc.kaltmiete_y 
         - (this.$props.calc.kaltmiete_y * (this.$props.calc.params.Const_ANUM/100)) 
         - (((this.$props.calc.kaufpreis * (1 + (this.$props.calc.params.Const_KNK/100))) - (this.$props.calc.kaufpreis * (this.$props.calc.params.Const_EK/100))) * (this.$props.calc.params.Const_AZ/100)) 
         - (((this.$props.calc.kaufpreis * (1 + (this.$props.calc.params.Const_KNK/100))) - (this.$props.calc.kaufpreis * (this.$props.calc.params.Const_EK/100))) * (this.$props.calc.params.Const_AAT/100))
-    }
+    } 
+  },
+  computed: {
   },
   filters: {
     separatedNumber (value) {
@@ -154,6 +155,12 @@ export default {
           .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' €'
       ) // use . as a separator
     }
+  },
+  /* mounted() {
+    this.computeLiquidYear()
+  }, */
+  beforeUpdate() {
+    this.computeLiquidYear()
   },
   components: {
     'edit-calculation' : require('components/EditCalculation.vue').default,
