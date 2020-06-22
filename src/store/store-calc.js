@@ -10,7 +10,13 @@ const state = {
     Const_AZ: 2,
     Const_AAT: 1
   },
-  params: null,
+  params: {
+    Const_KNK: 13,
+    Const_ANUM: 25,
+    Const_EK: 25,
+    Const_AZ: 2,
+    Const_AAT: 1
+  },
   calcs: {
     /* 'ID0': {
       titel: 'Some Real Estate Object',
@@ -118,6 +124,9 @@ const actions = {
 const getters = {
   getCalculations: (state) => {
     return state.calcs
+  },
+  getParamState: (state) => {
+    return state.params
   },
   getCount: (state) => {
     console.log('getCount:' + Object.keys(state.calcs).length)

@@ -2,6 +2,7 @@
   <q-page class="row">
     <div class="col q-ma-md">
       <p>Settings</p>
+      <p>{{getParamState.Const_KNK}}</p>
     </div>
   </q-page>
 </template>
@@ -15,7 +16,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('storeCalculation', ['getParams'])
+    ...mapGetters('storeCalculation', ['getParamState'])
   },
 }
 </script>
