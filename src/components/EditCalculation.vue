@@ -245,7 +245,8 @@ export default {
     },
     onSubmit () {
       this.$q.notify({
-        color: 'green-4',
+        color: 'positive',
+        position: 'top',
         textColor: 'white',
         icon: 'cloud_done',
         message: 'Submitted'

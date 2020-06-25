@@ -43,6 +43,9 @@ const mutations = {
   updateCalculation(state, payload) {
     Object.assign(state.calcs[payload.id], payload.updates)
   },
+  updateParams(state, payload) {
+    Object.assign(state.params,payload.updates)
+  },
   deleteCalculation(state, id) {
     Vue.delete(state.calcs, id)
   },
@@ -76,6 +79,9 @@ const actions = {
   updateCalculation({ commit, dispatch }, payload) {
     commit('updateCalculation', payload)
     dispatch('saveCalcs')
+  },
+  updateParams({ commit }, payload) {
+    commit('updateParams', payload)
   },
   deleteCalculation({ commit, dispatch }, calcID){
     commit('deleteCalculation', calcID)
@@ -127,6 +133,9 @@ const getters = {
   },
   getParamState: (state) => {
     return state.params
+  },
+  getDefaultParamState: (state) => {
+    return state.defaultParams
   },
   getCount: (state) => {
     console.log('getCount:' + Object.keys(state.calcs).length)

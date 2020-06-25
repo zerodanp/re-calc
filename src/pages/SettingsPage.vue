@@ -1,23 +1,14 @@
 <template>
   <q-page class="row">
-    <div class="col q-ma-md">
-      <p>Settings</p>
-      <p>{{getParamState.Const_KNK}}</p>
-    </div>
+      <edit-settings/>
   </q-page>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-
-export default {
-  data () {
-    return {
-    }
-  },
-  computed: {
-    ...mapGetters('storeCalculation', ['getParamState'])
-  },
+export default {  
+  components: {
+    'edit-settings' : require('components/EditSettings.vue').default
+  }
 }
 </script>
 
