@@ -3,11 +3,16 @@
     <div class="col q-ma-md">
       <div class="column full-height">
         <q-scroll-area class="col q-pa-sm">
-          <calculation-card
-            v-for="(calc, key) in getCalculations"
-            :key="key"
-            :id="key"
-            :calc="calc" />
+          <transition
+            appear
+            enter-active-class="animated zoomIn"
+            leave-active-class="animated zoomOut">
+            <calculation-card
+              v-for="(calc, key) in getCalculations"
+              :key="key"
+              :id="key"
+              :calc="calc" />
+          </transition>
         </q-scroll-area>
   
         <div

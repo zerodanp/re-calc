@@ -61,7 +61,7 @@ export default {
         {
           title: 'Calculator',
           icon: 'computer',
-          link: '/calculator'
+          link: '/'
         },
         {
           title: 'Settings',
