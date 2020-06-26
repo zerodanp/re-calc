@@ -16,15 +16,15 @@
               <q-chip color="secondary">
                 {{paramsToSubmit.Const_KNK}} %
               </q-chip>
-              <q-popup-edit v-model="paramsToSubmit.Const_KNK">
-                <q-input v-model="paramsToSubmit.Const_KNK"/>
+              <q-popup-edit v-model.number="paramsToSubmit.Const_KNK">
+                <q-input v-model.number="paramsToSubmit.Const_KNK"/>
               </q-popup-edit>
             </div>
           </div>
           <div class="col-10">
             <q-slider
             :value="paramsToSubmit.Const_KNK"
-            @change="val => { paramsToSubmit.Const_KNK = val }"
+            @change="val => { paramsToSubmit.Const_KNK = Number(val) }"
             :min="0"
             :max="100"
             :step="1"
@@ -45,15 +45,15 @@
               <q-chip color="secondary">
                 {{paramsToSubmit.Const_EK}} %
               </q-chip>
-              <q-popup-edit v-model="paramsToSubmit.Const_EK">
-                <q-input v-model="paramsToSubmit.Const_EK"/>
+              <q-popup-edit v-model.number="paramsToSubmit.Const_EK">
+                <q-input v-model.number="paramsToSubmit.Const_EK"/>
               </q-popup-edit>
             </div>
           </div>
           <div class="col-10">
             <q-slider
             :value="paramsToSubmit.Const_EK"
-            @change="val => { paramsToSubmit.Const_EK = val }"
+            @change="val => { paramsToSubmit.Const_EK = Number(val) }"
             :min="0"
             :max="100"
             :step="1"
@@ -74,15 +74,15 @@
               <q-chip color="secondary">
                 {{paramsToSubmit.Const_ANUM}} %
               </q-chip>
-              <q-popup-edit v-model="paramsToSubmit.Const_ANUM">
-                <q-input v-model="paramsToSubmit.Const_ANUM"/>
+              <q-popup-edit v-model.number="paramsToSubmit.Const_ANUM">
+                <q-input v-model.number="paramsToSubmit.Const_ANUM"/>
               </q-popup-edit>
             </div>
           </div>
           <div class="col-10">
             <q-slider
             :value="paramsToSubmit.Const_ANUM"
-            @change="val => { paramsToSubmit.Const_ANUM = val }"
+            @change="val => { paramsToSubmit.Const_ANUM = Number(val) }"
             :min="0"
             :max="100"
             :step="1"
@@ -103,15 +103,15 @@
               <q-chip color="secondary">
                 {{paramsToSubmit.Const_AZ}} %
               </q-chip>
-              <q-popup-edit v-model="paramsToSubmit.Const_AZ">
-                <q-input v-model="paramsToSubmit.Const_AZ"/>
+              <q-popup-edit v-model.number="paramsToSubmit.Const_AZ">
+                <q-input v-model.number="paramsToSubmit.Const_AZ"/>
               </q-popup-edit>
             </div>
           </div>
           <div class="col-10">
             <q-slider
             :value="paramsToSubmit.Const_AZ"
-            @change="val => { paramsToSubmit.Const_AZ = val }"
+            @change="val => { paramsToSubmit.Const_AZ = Number(val) }"
             :min="0"
             :max="100"
             :step="1"
@@ -132,15 +132,15 @@
               <q-chip color="secondary">
                 {{paramsToSubmit.Const_AAT}} %
               </q-chip>
-              <q-popup-edit v-model="paramsToSubmit.Const_AAT">
-                <q-input v-model="paramsToSubmit.Const_AAT"/>
+              <q-popup-edit v-model.number="paramsToSubmit.Const_AAT">
+                <q-input v-model.number="paramsToSubmit.Const_AAT"/>
               </q-popup-edit>
             </div>
           </div>
           <div class="col-10">
             <q-slider
             :value="paramsToSubmit.Const_AAT"
-            @change="val => { paramsToSubmit.Const_AAT = val }"
+            @change="val => { paramsToSubmit.Const_AAT = Number(val) }"
             :min="0"
             :max="100"
             :step="1"

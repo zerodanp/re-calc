@@ -80,8 +80,9 @@ const actions = {
     commit('updateCalculation', payload)
     dispatch('saveCalcs')
   },
-  updateParams({ commit }, payload) {
+  updateParams({ commit, dispatch }, payload) {
     commit('updateParams', payload)
+    dispatch('saveParams')
   },
   deleteCalculation({ commit, dispatch }, calcID){
     commit('deleteCalculation', calcID)
