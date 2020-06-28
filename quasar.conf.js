@@ -114,8 +114,8 @@ module.exports = function (/* ctx */) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'Real Estate Calculator',
-        short_name: 'Real Estate Calculator',
+        name: 'RealEstateCalculator',
+        short_name: 'RealEstateCalculator',
         description: 'Calculation App Crossplatform',
         display: 'standalone',
         orientation: 'portrait',
@@ -154,7 +154,7 @@ module.exports = function (/* ctx */) {
     // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
     cordova: {
       // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-      id: 'com.daniel.re-calc'
+      id: 'com.daniel.recalculator'
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
@@ -182,7 +182,7 @@ module.exports = function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 're-calc'
+        appId: 'recalculator'
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration

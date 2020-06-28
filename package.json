@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Calculation App Crossplatform",
   "productName": "Real Estate Calculator",
-  "cordovaId": "com.daniel.re-calc",
+  "cordovaId": "com.daniel.recalculator",
   "capacitorId": "",
   "author": "Daniel Puhan",
   "private": true,
